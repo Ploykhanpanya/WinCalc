@@ -12,6 +12,7 @@ namespace WinCalc
 {
     public partial class frmWinCalc : Form
     {
+        private string number1 = "", number2 = "", answer = "";
         public frmWinCalc()
         {
             InitializeComponent();
