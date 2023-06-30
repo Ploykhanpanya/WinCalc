@@ -13,23 +13,55 @@ namespace WinCalc
     public partial class frmWinCalc : Form
     {
         private string number1 = "", number2 = "", answer = "";
+        private bool dotStatus = false;
+        private char symbol = '0';
 
         private void AddToDisplay(string numberSymbol)
         {
-            if (this.txtDisplay.Text == "0")
+            if (this.txtDisplay.Text == "0" && numberSymbol == ".") // 0.
             {
-                this.txtDisplay.Text = numberSymbol;
+                this.dotStatus = true;
+                this.txtDisplay.Text += numberSymbol;
 
             }
-            else
+            else if(this.txtDisplay.Text == "0") // 0 = 0
             {
-                this.txtDisplay.Text += numberSymbol;          
+                this.txtDisplay.Text = numberSymbol;          
             }
-            //if (numberSymbol == ".")
-            //{
-            //    this.txtDisplay.Text += numberSymbol;
-            //}
+            else if (this.txtDisplay.Text != "0") // 1234
+            {
+                this.txtDisplay.Text += numberSymbol;
+            }
+            else if(this.dotStatus)
+            {
+                this.txtDisplay.Text = this.txtDisplay.Text;
+            }
         }
+
+        private string calculating(string num1, string num2, char _symbol)
+        {
+            double numFirst = double.Parse(num1);
+            double numSecond = double.Parse(num2);
+            double numAnswer = 0.0f;
+
+            switch(_symbol)
+            {
+                case '+': numAnswer = numFirst + numSecond; break;
+                case '-': numAnswer = numFirst - numSecond; break;
+                case '*': numAnswer = numFirst * numSecond; break;
+                case '/': numAnswer = numFirst / numSecond; break;
+            }
+
+            return numAnswer.ToString();
+        }
+
+        private void  setNumber1(char _symbol)
+        {
+            this.symbol = _symbol;
+            this.number1 = this.txtDisplay.Text;
+            this.txtDisplay.Text = "0";
+        }
+
         public frmWinCalc()
         {
             InitializeComponent();
@@ -42,33 +74,36 @@ namespace WinCalc
 
         private void btnEpual_Click(object sender, EventArgs e)
         {
-
+            this.number2 = this.txtDisplay.Text;
+            this.txtDisplay.Text = 
+            this.calculating(this.number1, number2, this.symbol); 
         }
 
         private void btnDivide_Click(object sender, EventArgs e)
         {
-
+            this.setNumber1('/');
         }
 
         private void btnMultiply_Click(object sender, EventArgs e)
         {
-
+            this.setNumber1('*');
         }
 
         private void btnMinus_Click(object sender, EventArgs e)
         {
-
+            this.setNumber1('-');
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-
+            this.setNumber1('+');
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
             this.number1 = this.number2 = this.answer = "0";
             this.txtDisplay.Text = "0";
+            this.symbol = '0';
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -118,6 +153,12 @@ namespace WinCalc
             this.AddToDisplay("7");
         }
 
+        #region kiki
+        private void txtDisplay_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
         private void btnEight_Click(object sender, EventArgs e)
         {
             this.AddToDisplay("8");
