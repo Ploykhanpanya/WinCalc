@@ -18,25 +18,28 @@ namespace WinCalc
 
         private void AddToDisplay(string numberSymbol)
         {
+            if (numberSymbol == ".")
+                this.dotStatus = true;
+
+            // BUG
+            //if (this.txtDisplay.Text.Length >= 15) 
+            //    this.txtDisplay.Text = this.txtDisplay.Text;
+
+
             if (this.txtDisplay.Text == "0" && numberSymbol == ".") // 0.
             {
-                this.dotStatus = true;
-                this.txtDisplay.Text += numberSymbol;
-
-            }
-            else if(this.txtDisplay.Text == "0") // 0 = 0
-            {
-                this.txtDisplay.Text = numberSymbol;          
-            }
-            else if (this.txtDisplay.Text != "0") // 1234
-            {
                 this.txtDisplay.Text += numberSymbol;
             }
-            else if(this.dotStatus)
+            else if (this.txtDisplay.Text == "0")    // 0 = 0
             {
-                this.txtDisplay.Text = this.txtDisplay.Text;
+                this.txtDisplay.Text = numberSymbol;
+            }
+            else if (this.txtDisplay.Text != "0")   // 1234
+            {
+                this.txtDisplay.Text += numberSymbol;
             }
         }
+
 
         private string calculating(string num1, string num2, char _symbol)
         {
@@ -69,7 +72,8 @@ namespace WinCalc
 
         private void btnDot_Click(object sender, EventArgs e)
         {
-            this.AddToDisplay(".");
+            if (!this.dotStatus)
+                this.AddToDisplay(".");
         }
 
         private void btnEpual_Click(object sender, EventArgs e)
