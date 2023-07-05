@@ -104,11 +104,17 @@ namespace WinCalc
             this.number1 = this.number2 = this.answer = "0";
             this.txtDisplay.Text = "0";
             this.symbol = '0';
+            this.dotStatus = false;
         }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
+            if (this.txtDisplay.Text.Length > 0)
+                this.txtDisplay.Text =
+                        this.txtDisplay.Text.Remove(this.txtDisplay.Text.Length - 1);
 
+            if((this.txtDisplay.Text.Length == 0) || (this.txtDisplay.Text == ""))
+                    this.txtDisplay.Text += "0";
         }
 
 
@@ -159,6 +165,24 @@ namespace WinCalc
 
         }
         #endregion
+        private void mnuClearItem_Click(object sender, EventArgs e)
+        {
+            this.btnClear_Click(sender, e);
+        }
+
+        private void mnuExitItem_Click(object sender, EventArgs e)
+        {
+            //this.Close();
+            Application.Exit();
+        }
+
+        private void mnuAboutItem_Click(object sender, EventArgs e)
+        {
+            frmAbout objAbout = new frmAbout();
+
+            objAbout.ShowDialog();
+        }
+
         private void btnEight_Click(object sender, EventArgs e)
         {
             this.AddToDisplay("8");
