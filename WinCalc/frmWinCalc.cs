@@ -63,6 +63,7 @@ namespace WinCalc
             this.symbol = _symbol;
             this.number1 = this.txtDisplay.Text;
             this.txtDisplay.Text = "0";
+            this.dotStatus = false;
         }
 
         public frmWinCalc()
